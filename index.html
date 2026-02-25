@@ -260,8 +260,8 @@
         const diff = document.getElementById('certDiff').innerText;
         
         // 極簡文案設計，保證低於 128 字元
-        const txt = `🍎 蘋果的考驗\n🎓 ${name} | 🏆 ${rank}\n⏱ ${total.toFixed(2)}s | ⚙️ 難度 ${diff}\n👉 挑機：https://phyrl.github.io/challenge981/`;
-        
+        const txt = `🍎 蘋果的考驗\n🎓 ${name} | 🏆 ${rank}\n⏱ ${total.toFixed(2)}s | ⚙️ 難度 ${diff}\n👉 挑機：https://phyrl.github.io/applechallenge981/`;
+                
         navigator.clipboard.writeText(txt).then(() => {
             alert("✅ 戰績與連結已複製！\n\n📌 分享小貼士：\n🔹 Teams / Threads：直接貼上即可點擊連結。\n🔹 IG Story：貼上文字後，請用「連結 (Link)」貼紙加入網址！");
         }).catch(() => {
@@ -517,4 +517,5 @@
 
 </script>
 </body>
+
 </html>
