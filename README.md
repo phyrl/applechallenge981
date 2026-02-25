@@ -1,4 +1,4 @@
-# 🍎 蘋果的考驗 (Apple's Challenge)
+# 🍎 蘋果的考驗 (Apple's Challenge 9.81)
 
 A fast-paced, interactive physics mini-game designed for students to memorize Kinematics Equations. 
 專為學生設計的物理運動學公式挑戰遊戲。
