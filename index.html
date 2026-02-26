@@ -2,11 +2,12 @@
 <html lang="zh-HK">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>蘋果的考驗 V0.6.6.17</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>蘋果的考驗 V0.6.6.18</title>
 <style>
     :root { --accent: #e74c3c; --gold: #f1c40f; --bg: #0d0d0d; --cert-bg: #1a1a1a; }
-    * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+    /* 修正：禁止雙擊縮放 */
+    * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: manipulation; }
     body { margin: 0; background: var(--bg); color: white; font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; touch-action: none; position: fixed; width: 100%; height: 100%; }
     #gameContainer { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: #000; }
     canvas { display: block; width: 100%; height: 100%; z-index: 10; }
@@ -23,7 +24,7 @@
     .next-char { color: #fff; text-decoration: underline; text-underline-offset: 6px; animation: blink 0.8s infinite; }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* 公式預告的淡入淡出動畫 (3.5秒) */
+    /* 公式預告的淡入淡出動畫 */
     @keyframes fadeInOut { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
 
     /* 控制器 */
@@ -43,8 +44,9 @@
     .float-msg { position: absolute; pointer-events: none; font-weight: bold; animation: floatUp 1s forwards; z-index: 60; font-size: 24px; text-shadow: 2px 2px 4px black; }
     @keyframes floatUp { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(-60px); } }
 
-    /* 金句背景與圖層，保證覆蓋一切 */
+    /* 修正：優化金句佈局，確保 S21 能顯示底部 RL 標記 */
     #quoteOverlay { background: #000; z-index: 500; }
+    .quote-wrap { font-size: clamp(16px, 5vw, 22px); color: var(--gold); letter-spacing: 4px; line-height: 1.8; text-align: center; margin-top: auto; margin-bottom: auto; }
 </style>
 </head>
 <body oncontextmenu="return false;">
@@ -73,7 +75,7 @@
 
     <div id="mainMenu" class="overlay">
         <h1 style="color:var(--accent); font-size:42px; margin:0;">🍎 蘋果的考驗</h1>
-        <div style="font-size:12px; color:rgba(255,255,255,0.3); letter-spacing:2px; margin-top:5px; margin-bottom:15px; font-family:monospace;">VERSION 0.6.6.17</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.3); letter-spacing:2px; margin-top:5px; margin-bottom:15px; font-family:monospace;">VERSION 0.6.6.18</div>
         
         <p style="color:var(--gold); font-style: italic; margin-top:0;">「研習物理，需心無旁鶩。」</p>
         <input type="text" id="playerName" placeholder="你的名字" maxlength="10" style="width:220px; padding:12px; border-radius:10px; text-align:center; font-size:18px; margin:15px 0; border:1px solid #444; background:#222; color:white;">
@@ -141,7 +143,7 @@
     </div>
 
     <div id="quoteOverlay" class="overlay hidden" style="justify-content:center; padding-top:0;">
-        <div style="font-size:22px; color:var(--gold); letter-spacing:4px; line-height:2.2; text-align:center;">「研習物理，需心無旁鶩。」<br>「嬉戲之時，莫忘探索真理。」</div>
+        <div class="quote-wrap">「研習物理，需心無旁鶩。」<br>「嬉戲之時，莫忘探索真理。」</div>
         <div style="position:absolute; bottom:30px; left:0; right:0; font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:2px; font-family:monospace; text-align:center;">
             TMCSS PHYSICS • RL • FEB-2026
         </div>
@@ -252,14 +254,12 @@
         }
     };
 
-    // 🌟 V0.6.6.17: 極簡文案與精準引導提示
     window.copyToIG = () => {
         let total = 0; levelTimes.forEach(t => total += t);
         const name = document.getElementById('certPlayerName').innerText;
         const rank = document.getElementById('rankLabel').innerText;
         const diff = document.getElementById('certDiff').innerText;
         
-        // 極簡文案設計，保證低於 128 字元
         const txt = `🍎 蘋果的考驗\n🎓 ${name} | 🏆 ${rank}\n⏱ ${total.toFixed(2)}s | ⚙️ 難度 ${diff}\n👉 挑機：https://phyrl.github.io/applechallenge981/`;
                 
         navigator.clipboard.writeText(txt).then(() => {
@@ -517,6 +517,4 @@
 
 </script>
 </body>
-
 </html>
-
