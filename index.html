@@ -6,7 +6,7 @@
 <title>蘋果的考驗 V0.6.6.18</title>
 <style>
     :root { --accent: #e74c3c; --gold: #f1c40f; --bg: #0d0d0d; --cert-bg: #1a1a1a; }
-    /* 修正：禁止雙擊縮放 */
+    /* 修正 2：禁止雙擊縮放及移除點擊延遲 */
     * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: manipulation; }
     body { margin: 0; background: var(--bg); color: white; font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; touch-action: none; position: fixed; width: 100%; height: 100%; }
     #gameContainer { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: #000; }
@@ -24,7 +24,7 @@
     .next-char { color: #fff; text-decoration: underline; text-underline-offset: 6px; animation: blink 0.8s infinite; }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* 公式預告的淡入淡出動畫 */
+    /* 公式預告的淡入淡出動畫 (3.5秒) */
     @keyframes fadeInOut { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
 
     /* 控制器 */
@@ -44,9 +44,8 @@
     .float-msg { position: absolute; pointer-events: none; font-weight: bold; animation: floatUp 1s forwards; z-index: 60; font-size: 24px; text-shadow: 2px 2px 4px black; }
     @keyframes floatUp { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(-60px); } }
 
-    /* 修正：優化金句佈局，確保 S21 能顯示底部 RL 標記 */
+    /* 金句背景與圖層，保證覆蓋一切 */
     #quoteOverlay { background: #000; z-index: 500; }
-    .quote-wrap { font-size: clamp(16px, 5vw, 22px); color: var(--gold); letter-spacing: 4px; line-height: 1.8; text-align: center; margin-top: auto; margin-bottom: auto; }
 </style>
 </head>
 <body oncontextmenu="return false;">
@@ -142,9 +141,13 @@
         <button class="btn-apple" style="background:#34495e;" onclick="window.goToEndGameLeaderboard()">查看排行榜</button>
     </div>
 
-    <div id="quoteOverlay" class="overlay hidden" style="justify-content:center; padding-top:0;">
-        <div class="quote-wrap">「研習物理，需心無旁鶩。」<br>「嬉戲之時，莫忘探索真理。」</div>
-        <div style="position:absolute; bottom:30px; left:0; right:0; font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:2px; font-family:monospace; text-align:center;">
+    <div id="quoteOverlay" class="overlay hidden" style="justify-content:center; padding: 0 20px; display:flex; flex-direction:column;">
+        <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+            <div style="font-size:22px; color:var(--gold); letter-spacing:4px; line-height:2.2; text-align:center;">
+                「研習物理，需心無旁鶩。」<br>「嬉戲之時，莫忘探索真理。」
+            </div>
+        </div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:2px; font-family:monospace; text-align:center; padding-bottom:30px;">
             TMCSS PHYSICS • RL • FEB-2026
         </div>
     </div>
